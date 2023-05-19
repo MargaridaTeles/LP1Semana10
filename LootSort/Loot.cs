@@ -1,10 +1,15 @@
+using System;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
+
 namespace LootSort
 {
     /// <summary>
     /// The Loot class should implement IComparable<Loot>
     /// and override GetHashCode() and Equals()
     /// </summary>
-    public class Loot
+    public class Loot : IComparable<Loot>
     {
         /// <summary>Type of loot.</summary>
         public LootType Kind { get; }
@@ -26,6 +31,43 @@ namespace LootSort
             Kind = kind;
             Description = description;
             Value = value;
+        }
+
+        public int CompareTo(Loot other)
+        {
+            if (other == null) return 1;
+
+            if (Kind == other.Kind)
+            {
+                if (Value == other.Value)
+                {
+                    return (string.Compare(Description, other.Description));
+                }
+                else
+                {
+                    return (int)(other.Value - Value);
+                }
+            }
+            else
+            {
+                return (string.Compare(Kind.ToString(), other.Kind.ToString()));
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return  Kind.GetHashCode() 
+                    ^ Value.GetHashCode() 
+                    ^ Description.GetHashCode();
+        }
+
+        public override bool Equals(object other)
+        {
+            return Kind.Equals((other as Loot).Kind)
+                    &&
+                    Kind.Equals((other as Loot).Kind)
+                    &&
+                    Description.Equals((other as Loot).Description);
         }
 
         /// <summary>
