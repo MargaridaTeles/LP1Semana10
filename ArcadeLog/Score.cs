@@ -26,7 +26,7 @@ namespace ArcadeLog
 
         // Construtor: aceita nome e pontuação
         // CÓDIGO AQUI
-        public Score(string name, int points)
+        public Score(string name)
         {
             Name = name;
             Points = points;

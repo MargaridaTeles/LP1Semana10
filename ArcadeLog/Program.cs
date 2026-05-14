@@ -12,10 +12,19 @@ namespace ArcadeLog
         {
             // Lê o Ficheiro e Cria os Scores
             List<Score> scores = new List<Score>();
-            // CÓDIGO AQUI
+            string fileName = args[0];
 
+            // CÓDIGO AQUI
+            using StreamReader reader = new StreamReader(fileName);
+            string s;
+            while((s = reader.ReadLine()) != null)
+            {
+                //Console.WriteLine(s);
+                scores.Add(new Score(s));
+            }
             // Ordena os Scores
             // CÓDIGO AQUI
+            
 
             // Agrupa por Medalha e Imprime (Gold → Silver → Bronze)
             // Escreve a lista no ficheiro ranking.txt
@@ -23,6 +32,7 @@ namespace ArcadeLog
 
             Console.WriteLine("Ranking guardado em 'ranking.txt'.");
 
+            // --------- Ordenar ScoreByName
             // Ordena por Nome e Escreve em alpha.txt
             // CÓDIGO AQUI
 
