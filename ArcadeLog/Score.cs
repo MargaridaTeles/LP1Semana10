@@ -4,45 +4,53 @@ namespace ArcadeLog
 {
     public class Score : IComparable<Score>
     {
-        // Variável de Instância Privada: points (int)
-        // CÓDIGO AQUI
+        // Variável de instância privada
         private int points;
 
-        // Propriedade Auto-Implementada Só de Leitura: Name (string)
-        // CÓDIGO AQUI
+        // Propriedade só de leitura
         public string Name { get; }
 
-        // Propriedade: Points (int), sempre entre 0 e 9999
-        // CÓDIGO AQUI
-
-        // Falta fazer entre 0 e 9999
-        public int Points { get; set; }
-
-        // Propriedade Só de Leitura: Medal (string)
-        // CÓDIGO AQUI
-
-        // Valor "Gold" se Points >= 7000, "Silver" >= 4000 else "Bronze"
-        public string Medal { get; }
-
-        // Construtor: aceita nome e pontuação
-        // CÓDIGO AQUI
-        public Score(string name)
+        // Propriedade Points (0–9999)
+        public int Points
         {
-            Name = name;
-            Points = points;
-            
+            get => points;
+            set
+            {
+                if (value < 0) points = 0;
+                else if (value > 9999) points = 9999;
+                else points = value;
+            }
         }
 
+        // Propriedade só de leitura Medal
+        public string Medal
+        {
+            get
+            {
+                if (Points >= 7000) return "Gold";
+                if (Points >= 4000) return "Silver";
+                return "Bronze";
+            }
+        }
+
+        // Construtor
+        public Score(string name, int points)
+        {
+            Name = name;
+            Points = points; // usa a propriedade para validar
+        }
+
+        // Ordenação descendente por pontuação
         public int CompareTo(Score other)
         {
             if (other == null) return 1;
-            return other.Points - this.points; // substitua o return
+            return other.Points.CompareTo(this.Points);
         }
 
+        // ToString no formato pedido
         public override string ToString()
         {
-            // CÓDIGO AQUI
-            return $"{Name} [{Medal}]: {Points}"; // substitua o return
+            return $"{Name} [{Medal}]: {Points}";
         }
     }
 }

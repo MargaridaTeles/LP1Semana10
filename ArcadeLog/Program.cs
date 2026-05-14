@@ -20,11 +20,19 @@ namespace ArcadeLog
             while((s = reader.ReadLine()) != null)
             {
                 //Console.WriteLine(s);
-                scores.Add(new Score(s));
+                string[] parts = s.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                string name = parts[0];
+                int points = int.Parse(parts[1]);
+
+                scores.Add(new Score(name, points));
             }
+
             // Ordena os Scores
             // CÓDIGO AQUI
-            
+            scores.Sort();
+            foreach(Score score in scores)
+                Console.WriteLine(score);
 
             // Agrupa por Medalha e Imprime (Gold → Silver → Bronze)
             // Escreve a lista no ficheiro ranking.txt
@@ -35,6 +43,12 @@ namespace ArcadeLog
             // --------- Ordenar ScoreByName
             // Ordena por Nome e Escreve em alpha.txt
             // CÓDIGO AQUI
+
+            scores.Sort(new ScoreByNameComparer(true));
+            using StreamWriter writer = new StreamWriter("ArcadeLog/alpha.txt");
+
+            foreach(Score score in scores)
+                writer.WriteLine(score);
 
             // Este programa mostra o seguinte no ecrã (exemplo: scores.txt com "Kronos 7400", "Luna 3800", "Rex 520", "Phantom 6100"):
             //
